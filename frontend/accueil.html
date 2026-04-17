@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison de mode</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+       
+        /* HERO */
+        .hero {
+            padding: 5rem 2rem;
+            background: #fff;
+            min-height: calc(100vh - 120px);
+            display: flex;
+            align-items: center;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .col-text {
+            flex: 1;
+            max-width: 560px;
+        }
+         .col-text h1 {
+            font-size: 2.6rem;
+            color: #be8a05;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            padding-top: 0.5rem;
+        }
+            .col-text span {
+               
+                font-size: 2.5rem;
+                color: #131210;
+                margin-bottom: 2rem;
+            }
+        .col-text p {
+            font-size: 1.5rem;
+            color: #5a5550;
+            line-height: 3.25rem;
+         padding-top: 30px;
+        }
+       
+         .col-img {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .col-img img {
+            width: 100%;
+            max-width: 550px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        /* PROMO */
+        .reduc-promo {
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+                min-height: 700px;
+                gap: 2rem;
+                padding: 4rem 2rem;
+            background-image: url(assets/back-promo2.jpg);
+            background-size: cover;}
+       .promo{
+        font-size: 2.5rem;
+        text-align: center;
+        color: #121211;
+       
+       }
+       .promo h2{
+    color: #be8a05;
+font-size: 2.5rem;
+margin-bottom: 1rem;}
+.promo span{
+    font-size: 1.5rem;
+color: #fff;}
+
+.reduction{
+            font-size: 1.25rem;
+            text-align: center; 
+        color: #121211;}
+        
+            
+        .reduction h3{
+           
+                font-size: 2.5rem;
+            color: #be8a05;
+            line-height: 1.8;}
+            .reduction p{
+                color: #fff;
+                font-size: 1rem;
+                line-height: 1.8;
+                margin-top: 1rem;
+            }
+         
+        
+       
+        
+      
+
+/* Responsive 📱 */
+
+    
+   /* CARDS */ 
+   .card-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 80px;
+    gap: 1rem;
+}
+
+/* IMPORTANT */
+.collection,
+.top-vente {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+/* Images */
+.collection img,
+.top-vente img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Overlay */
+.card-2 .overlay-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.4);
+    color: white;
+    text-align: center;
+}
+
+.card-2 .overlay-2 h2 {
+    font-size: 2rem;
+}
+.collection img,
+.top-vente img {
+    transition: transform 0.5s ease;
+}
+
+.collection:hover img,
+.top-vente:hover img {
+    transform: scale(1.1);
+}
+.inscription{
+    background:#fde098;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+   margin-bottom:50px;
+
+}
+
+.inscription .inscription-wrap p{
+    text-align: center;
+   
+    padding: 2rem;
+     color: #ffffff;
+    font-size: 1.25rem;
+}
+
+.inscription .inscription-form input{
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    width: 300px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.inscription .inscription-form input:focus { border-color: #edb424; }
+.inscription .inscription-form button{
+    padding: 0.75rem 1.5rem;
+    background:  #f9cc59;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.inscription .inscription-form button:hover { background: #edb424; }
+footer {
+    background: #141414;
+    color: #fff;
+    padding:4rem 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4rem;
+    width: 100%;
+    justify-content: space-around;
+   
+    
+}
+footer h1 {
+    font-size: 1.5rem;
+    margin: 2rem;
+    color: #be8a05;
+}
+.service-client,
+.reseaux-sociaux{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+}
+.infos-boutique {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+    </style>
+</head>
+<body>
+
+     <nav class="navbar">
+        <a href="accueil.html" class="logo">
+            <img src="assets/logo.png" alt="Drape">
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="femme.html">Femme</a></li>
+            <li><a href="homme.html">Homme</a></li>
+            <li><a href="enfant.html">Enfant</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+        </ul>
+
+        <div class="search-box">
+            <input type="text" placeholder="Rechercher un produit...">
+        </div>
+
+        <div class="nav-icons">
+            <a href="accueil.html" class="nav-icon-btn" title="Accueil">
+                <img src="assets/home.png" alt="Accueil" class="active">
+            </a>
+
+            <div class="nav-icon-btn" title="Panier">
+                <img src="assets/panier.png" alt="Panier">
+                <span class="badge" id="compteur-panier">0</span>
+            </div>
+
+            <div class="nav-icon-btn" title="Favoris">
+                <img src="assets/favoris.png" alt="Favoris">
+                <span class="badge" id="compteur-favoris">0</span>
+            </div>
+
+            <div class="nav-icon-btn" title="Mon compte">
+                <img src="assets/user.png" alt="Connexion">
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── MARQUEE ─── -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span class="marquee-item">Livraison offerte dès 120€</span>
+            <span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Retours gratuits 30 jours</span>
+            <span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Matières premium sélectionnées</span>
+            <span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Mode responsable & durable</span>
+            <span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Livraison offerte dès 120€</span>
+            <span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Retours gratuits 30 jours</span>
+            <span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Matières premium sélectionnées</span>
+            <span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Mode responsable & durable</span>
+            <span class="marquee-item marquee-dot">·</span>
+        </div>
+    </div>
+
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="row">
+            <div class="col col-text">
+                
+                <h1><em><b>MAISON DE MODE </b></em></h1>
+                  <span> <b> — Portez ce que vous êtes</b></span>
+                <p>La mode n'est pas un luxe, c'est une expression. Chez Drape, chaque pièce est choisie pour vous accompagner du matin au soir, avec style et confort. Nouveautés chaque semaine.</p>
+            </div>
+            <div class="col col-img">
+                <img src="assets/img4.jpg" alt="Collection Drape">
+            </div>
+        </div>
+    </section>
+   <!-- PROMO -->
+    <section class="reduc-promo">
+   <div class="promo">
+
+         <h2>Saison Promo</h2>
+            <span>Profitez-en !</span>
+         </div>
+           <div class="reduction">
+            <h3>30%</h3>
+            <h3>50%</h3>
+            <h3>70%</h3>
+            <p>Profitez de nos réductions exceptionnelles sur une sélection d'articles <br>pour célébrer la saison du printemps/été 2026. <br>Des pièces incontournables à prix doux, <br>pour un style frais et tendance. <br>Offre valable jusqu'au 30 avril.</p>
+           </div>
+        </section>
+
+<div class="card-2">
+            <div class="collection">
+    <img src="assets/nov collec.jpg" alt="">
+             <div class="overlay-2">
+            <h2>nouvelle collection</h2></div>
+
+        </div>
+
+        <div class="top-vente">
+            <img src="assets/vente.jpg" alt="">
+                <div class="overlay-2">
+            <h2>top vente</h2></div>
+        </div>
+
+       
+
+    </div>
+
+   <div class="inscription">
+    <div class="inscription-wrap">
+ <p>Inscrivez-vous à notre newsletter pour recevoir <br>les dernières nouveautés et nos offres spéciales.</p>
+ </div>
+   <div class="inscription-form">
+    <input type="email" placeholder="Votre adresse email">
+    <button>S'inscrire</button>
+ </div>
+</div>
+
+    
+
+<footer>
+    <h1> <em><b>MAISON DE MODE </b></em></h1>
+    <div class="service-client">
+        <p>aide et contact</p>
+        <p>livraison et retours</p>
+        <p>FAQ</p></div>
+    <div class="reseaux-sociaux">
+        <p>suivez-nous</p>
+        <p>facebook</p>
+        <p>instagram</p>
+        <p>twitter</p>
+        <p>whatsapp</p>
+     </div>
+     <div class="infos-boutique">
+         <p>notre boutique</p>
+         <p>adresse : 123 rue de la mode, Paris</p>
+         <p>téléphone : +33 1 23 45 67 89</p>
+            <p>email : info@maisondemode.com</p></div>
+         
+     
+</footer>
+</body>
+</html>
