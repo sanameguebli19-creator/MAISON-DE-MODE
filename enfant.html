@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CORRECTION : titre était "MyEvents" au lieu de "Maison de Mode" -->
+  <title>Maison de Mode – Collection Enfant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ─── HERO CAROUSEL ─── */
+    .hero-carousel {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      background: var(--gold-pale);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.9s ease-in-out;
+    }
+
+    .slide.active { opacity: 1; }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 60%);
+    }
+
+    .slide-text {
+      position: absolute;
+      bottom: 3rem;
+      left: 3rem;
+      color: #fff;
+    }
+
+    .slide-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      font-style: italic;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      line-height: 1.15;
+      margin-bottom: 0.3rem;
+    }
+
+    .slide-text p { font-size: 1rem; opacity: 0.85; }
+
+    .dots {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 3rem;
+      display: flex;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 28px;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .dot.active { background: var(--gold-light); }
+
+    /* ─── FILTRES ─── */
+    .filtres-section {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .filtre-groupe {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .filtres-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #bbb;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    .filtre-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .filtre-btn {
+      padding: 0.32rem 1rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font-body);
+      letter-spacing: 0.04em;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .filtre-btn:hover { background: var(--gold-pale); }
+    .filtre-btn.active { background: var(--gold); color: #fff; }
+
+    /* ─── CATALOGUE ─── */
+    .catalogue-wrap {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .catalogue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .catalogue-count { font-size: 0.83rem; color: var(--gris); }
+
+    .sort-select {
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--dark);
+      background: #fff;
+      font-family: var(--font-body);
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* ─── GRILLE PRODUITS ─── */
+    .produits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.2rem;
+    }
+
+    /* ─── CARTE PRODUIT ─── */
+    .produit-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 0.5px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .produit-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(190,138,5,0.10);
+    }
+
+    .produit-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: var(--gold-pale);
+    }
+
+    .produit-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .produit-card:hover .produit-img-wrap img { transform: scale(1.05); }
+
+    .produit-fav {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      width: 30px;
+      height: 30px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s;
+      color: #bbb;
+    }
+
+    .produit-fav:hover { background: #fff; color: var(--gold); }
+    .produit-fav.liked { color: var(--gold); }
+
+    .produit-info {
+      padding: 0.85rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .produit-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 10px;
+      background: var(--gold-pale);
+      color: var(--gold);
+      width: fit-content;
+    }
+
+    .produit-name {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--dark);
+      margin-top: 0.1rem;
+    }
+
+    .produit-desc {
+      font-size: 0.78rem;
+      color: var(--gris);
+      flex: 1;
+    }
+
+    .produit-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.6rem;
+      gap: 6px;
+    }
+
+    .produit-price {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* CORRECTION : tous les liens "Voir produit" pointaient vers id=1
+       Maintenant chaque carte utilise son propre data-id */
+    .produit-footer a {
+      font-size: 0.75rem;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .produit-footer a:hover { color: var(--gold-light); }
+
+    .produit-fav-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gold-pale);
+      border: none;
+      color: #bbb;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .produit-fav-btn:hover { background: var(--gold); color: #fff; }
+    .produit-fav-btn.liked { background: var(--gold); color: #fff; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 4rem;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    footer .footer-brand h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    footer .footer-brand p { font-size: 0.82rem; color: #888; max-width: 200px; line-height: 1.6; }
+
+    footer .footer-col h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    footer .footer-col p,
+    footer .footer-col a {
+      font-size: 0.85rem;
+      color: #aaa;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.6rem;
+      transition: color 0.2s;
+    }
+
+    footer .footer-col a:hover { color: var(--gold-light); }
+
+    footer .footer-bottom {
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid #222;
+      padding-top: 1.5rem;
+      font-size: 0.78rem;
+      color: #555;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero-carousel { height: 260px; }
+      .slide-text { left: 1.5rem; bottom: 2rem; }
+      .slide-text h2 { font-size: 2rem; }
+      .dots { left: 1.5rem; }
+      .produits-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 2rem; padding: 2rem; }
+    }
+
+    @media (max-width: 360px) {
+      .produits-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav class="navbar">
+    <a href="accueil.html" class="logo">
+      <img src="assets/logo.png" alt="Maison de Mode" onerror="this.style.display='none'">
+    </a>
+    <ul class="nav-links">
+      <li><a href="femme.html">Femme</a></li>
+      <li><a href="homme.html">Homme</a></li>
+      <li><a href="enfant.html" class="active">Enfant</a></li>
+      <li><a href="promotions.html">Promotions</a></li>
+    </ul>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Rechercher un produit..."
+             oninput="rechercherProduit(this.value)">
+    </div>
+    <div class="nav-icons">
+      <a href="accueil.html" class="nav-icon-btn" title="Accueil">
+        <img src="assets/home.png" alt="Accueil" onerror="this.outerHTML='🏠'">
+      </a>
+      <div class="nav-icon-btn" title="Panier">
+        <img src="assets/panier.png" alt="Panier" onerror="this.outerHTML='🛒'">
+        <span class="badge" id="compteur-panier">0</span>
+      </div>
+      <div class="nav-icon-btn" title="Favoris">
+        <img src="assets/favoris.png" alt="Favoris" onerror="this.outerHTML='♡'">
+        <span class="badge" id="compteur-favoris">0</span>
+      </div>
+      <a href="connexion.php" class="nav-icon-btn" title="Mon compte">
+        <img src="assets/user.png" alt="Connexion" onerror="this.outerHTML='👤'">
+      </a>
+    </div>
+  </nav>
+
+  <!-- ─── MARQUEE ─── -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Livraison offerte dès 120€</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Retours gratuits 30 jours</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Matières premium sélectionnées</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Mode responsable & durable</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Livraison offerte dès 120€</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Retours gratuits 30 jours</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Matières premium sélectionnées</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Mode responsable & durable</span>
+      <span class="marquee-item marquee-dot">·</span>
+    </div>
+  </div>
+
+  <!-- ─── HERO CAROUSEL ─── -->
+  <section class="hero-carousel">
+    <div class="slide active">
+      <img src="assets/collection-fille-printemps.jpg" alt="Collection Printemps">
+      <div class="slide-overlay"></div>
+      <div class="slide-text">
+        <h2>Collection Printemps</h2>
+        <p>Le printemps arrive !</p>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="assets/collection-fille-ete.avif" alt="Collection Été">
+      <div class="slide-overlay"></div>
+      <div class="slide-text">
+        <h2>Collection Été</h2>
+        <p>Légèreté et couleurs pour l'été</p>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="assets/collection-fille-automne5.jpg" alt="Collection Automne">
+      <div class="slide-overlay"></div>
+      <div class="slide-text">
+        <h2>Collection Automne</h2>
+        <p>Style et confort pour la rentrée</p>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="assets/collection-fille-hiver3.jpg" alt="Collection Hiver">
+      <div class="slide-overlay"></div>
+      <div class="slide-text">
+        <h2>Collection Hiver</h2>
+        <p>Chaleur et élégance pour les petites</p>
+      </div>
+    </div>
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </section>
+
+  <!-- ─── FILTRES ─── -->
+  <div class="filtres-section">
+    <div class="filtre-groupe">
+      <span class="filtres-label">Sexe</span>
+      <button class="filtre-btn sexe-btn active" data-sexe="all" onclick="setSexe(this)">Tous</button>
+      <button class="filtre-btn sexe-btn" data-sexe="fille" onclick="setSexe(this)">Fille</button>
+      <button class="filtre-btn sexe-btn" data-sexe="garçon" onclick="setSexe(this)">Garçon</button>
+    </div>
+    <div class="filtre-sep"></div>
+    <div class="filtre-groupe">
+      <span class="filtres-label">Saison</span>
+      <button class="filtre-btn saison-btn active" data-saison="all" onclick="setSaison(this)">Toutes</button>
+      <button class="filtre-btn saison-btn" data-saison="Hiver" onclick="setSaison(this)">Hiver</button>
+      <button class="filtre-btn saison-btn" data-saison="Printemps" onclick="setSaison(this)">Printemps</button>
+      <button class="filtre-btn saison-btn" data-saison="Ete" onclick="setSaison(this)">Été</button>
+      <button class="filtre-btn saison-btn" data-saison="Automne" onclick="setSaison(this)">Automne</button>
+    </div>
+  </div>
+
+  <!-- ─── CATALOGUE ─── -->
+  <main class="catalogue-wrap">
+    <div class="catalogue-header">
+      <span class="catalogue-count" id="count-label">9 articles</span>
+      <select class="sort-select" onchange="trierProduits(this.value)">
+        <option value="defaut">Tri par défaut</option>
+        <option value="prix-asc">Prix croissant</option>
+        <option value="prix-desc">Prix décroissant</option>
+      </select>
+    </div>
+
+    <div class="produits-grid" id="grid">
+
+     
+      <div class="produit-card" data-id="1" data-sexe="fille" data-saison="Ete" data-prix="29.90">
+        <div class="produit-img-wrap">
+          <img src="assets/image-fille-5.avif" alt="Robe été">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Robe été</div>
+          <div class="produit-desc">Robe légère et élégante</div>
+          <div class="produit-footer">
+            <span class="produit-price">29,90 €</span>
+            <a href="produit.html?id=1">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="2" data-sexe="fille" data-saison="Ete" data-prix="34.90">
+        <div class="produit-img-wrap">
+          <img src="assets/image-fille9.avif" alt="Ensemble été">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Ensemble été</div>
+          <div class="produit-desc">T-shirt + short assorti</div>
+          <div class="produit-footer">
+            <span class="produit-price">34,90 €</span>
+            <a href="produit.html?id=2">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="3" data-sexe="fille" data-saison="Ete" data-prix="27.90">
+        <div class="produit-img-wrap">
+          <img src="assets/img14.avif" alt="Robe coton">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Robe coton</div>
+          <div class="produit-desc">Robe en coton douce et légère</div>
+          <div class="produit-footer">
+            <span class="produit-price">27,90 €</span>
+            <a href="produit.html?id=3">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="4" data-sexe="fille" data-saison="Ete" data-prix="39.90">
+        <div class="produit-img-wrap">
+          <img src="assets/img-fille9.avif" alt="Ensemble élégant">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Ensemble élégant</div>
+          <div class="produit-desc">Tenue chic pour les petites filles</div>
+          <div class="produit-footer">
+            <span class="produit-price">39,90 €</span>
+            <a href="produit.html?id=4">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="5" data-sexe="fille" data-saison="Ete" data-prix="32.90">
+        <div class="produit-img-wrap">
+          <img src="assets/img-fille11.avif" alt="Robe élégante">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Robe élégante</div>
+          <div class="produit-desc">Style et légèreté pour l'été</div>
+          <div class="produit-footer">
+            <span class="produit-price">32,90 €</span>
+            <a href="produit.html?id=5">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="6" data-sexe="fille" data-saison="Ete" data-prix="26.90">
+        <div class="produit-img-wrap">
+          <img src="assets/img-fille15.avif" alt="Robe à rayures">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Robe à rayures</div>
+          <div class="produit-desc">Robe à rayures bleues et blanches</div>
+          <div class="produit-footer">
+            <span class="produit-price">26,90 €</span>
+            <a href="produit.html?id=6">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="7" data-sexe="fille" data-saison="Ete" data-prix="35.90">
+        <div class="produit-img-wrap">
+          <img src="assets/img-fille45.avif" alt="Robe en jean">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Robe en jean</div>
+          <div class="produit-desc">Robe en jean élégante et décontractée</div>
+          <div class="produit-footer">
+            <span class="produit-price">35,90 €</span>
+            <a href="produit.html?id=7">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="8" data-sexe="fille" data-saison="Ete" data-prix="19.90">
+        <div class="produit-img-wrap">
+          <img src="assets/img-fille49.avif" alt="T-shirt blanc">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">T-shirt blanc</div>
+          <div class="produit-desc">T-shirt blanc classique et confortable</div>
+          <div class="produit-footer">
+            <span class="produit-price">19,90 €</span>
+            <a href="produit.html?id=8">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produit-card" data-id="9" data-sexe="fille" data-saison="Ete" data-prix="44.90">
+        <div class="produit-img-wrap">
+          <img src="assets/img-fille61.avif" alt="Robe chic">
+        </div>
+        <div class="produit-info">
+          <span class="produit-tag">Fille · Été</span>
+          <div class="produit-name">Robe chic</div>
+          <div class="produit-desc">Robe légère et chic pour sortie</div>
+          <div class="produit-footer">
+            <span class="produit-price">44,90 €</span>
+            <a href="produit.html?id=9">Voir produit</a>
+            <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+          </div>
+        </div>
+      </div>
+      <!-- ─── ARTICLES HIVER FILLE ─── -->
+<div class="produit-card" data-id="10" data-sexe="fille" data-saison="Hiver" data-prix="45.90">
+  <div class="produit-img-wrap">
+    <img src="assets/img-fille-hiver1.avif" alt="Manteau hiver">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">Manteau hiver</div>
+    <div class="produit-desc">Manteau d'hiver pour fille, doux et élégant, à nœud papillon, col châle à col rond et manches longues</div>
+    <div class="produit-footer">
+      <span class="produit-price">45,90 €</span>
+      <a href="produit.html?id=10">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="11" data-sexe="fille" data-saison="Hiver" data-prix="38.90">
+  <div class="produit-img-wrap">
+    <img src="assets/img-hiver1.avif" alt="Pull chaud">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">Ensemble hiver</div>
+    <div class="produit-desc">Ensemble 2 pièces pour filles, style automne-hiver, comprenant une jupe en velours côtelé avec broderie de lettres et une veste tendance plissée</div>
+    <div class="produit-footer">
+      <span class="produit-price">38,90 €</span>
+      <a href="produit.html?id=11">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="12" data-sexe="fille" data-saison="Hiver" data-prix="29.90">
+  <div class="produit-img-wrap">
+    <img src="assets/img-fille-hiver13.avif" alt="Robe hiver">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">bonnet hiver</div>
+    <div class="produit-desc">Ensemble de 3 piéces, écharpe d'automne et d'hiver, ensemble de gants tricotés, chapeau d'hiver chaud et épais avec protection des oreilles, chapeau de protection des oreilles double boule tendance pour garçon et fille</div>
+    <div class="produit-footer">
+      <span class="produit-price">29,90 €</span>
+      <a href="produit.html?id=12">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="13" data-sexe="fille" data-saison="Hiver" data-prix="38.90">
+  <div class="produit-img-wrap">
+    <img src="assets/img-fille-hiver22.avif" alt="Pull chaud">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">Cardigan hiver</div>
+    <div class="produit-desc">Cardigan Brodé Fleurs 3D pour Filles, Automne, Confortable, Doux</div>
+    <div class="produit-footer">
+      <span class="produit-price">21,75€</span>
+      <a href="produit.html?id=13">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="14" data-sexe="fille" data-saison="Hiver" data-prix="38.90">
+  <div class="produit-img-wrap">
+    <img src="assets/botte-fille7.avif" alt="Pull chaud">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">Bottes hiver</div>
+    <div class="produit-desc">Bottes pour filles, bottes décontractées en molleton noir, bottes Chelsea pour filles de style britannique, bottes courtes en molleton fin et léger, bottes de cheville adaptées aux sorties quotidiennes d'hiver</div>
+    <div class="produit-footer">
+      <span class="produit-price">36.85€</span>
+      <a href="produit.html?id=14">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="produit-card" data-id="15" data-sexe="fille" data-saison="Hiver" data-prix="38.90">
+  <div class="produit-img-wrap">
+    <img src="assets/mant-fille5.avif" alt="Pull chaud">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">Manteau hiver</div>
+    <div class="produit-desc">Manteau d'hiver style décontracté avec capuche amovible et ceinture</div>
+    <div class="produit-footer">
+      <span class="produit-price">36.85€</span>
+      <a href="produit.html?id=15">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="produit-card" data-id="16" data-sexe="fille" data-saison="Hiver" data-prix="38.90">
+  <div class="produit-img-wrap">
+    <img src="assets/img-fille-hiver20.avif" alt="Pull chaud">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">Collants hiver</div>
+    <div class="produit-desc">Collants avec étiquettes d'entretien en anglais acceptables sur l'emballage extérieur. 4 pièces pour fille, motif exquis de radiis appliqué, collants/leggings polyvalents de couleur unie pour l'automne/hiver</div>
+    <div class="produit-footer">
+      <span class="produit-price">23,00 €</span>
+      <a href="produit.html?id=16">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="17" data-sexe="fille" data-saison="Hiver" data-prix="38.90">
+  <div class="produit-img-wrap">
+    <img src="assets/imgh-fille59.avif" alt="Pull chaud">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">pull hiver</div>
+    <div class="produit-desc">Haut de base chaud à imprimé amour pour filles, vêtement intérieur mignon à col mi-haute et style long</div>
+    <div class="produit-footer">
+      <span class="produit-price">23,00 €</span>
+      <a href="produit.html?id=17">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="18" data-sexe="fille" data-saison="Hiver" data-prix="38.90">
+  <div class="produit-img-wrap">
+    <img src="assets/pyj-fille-hiver.avif" alt="Pull chaud">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">Fille · Hiver</span>
+    <div class="produit-name">pyjama hiver</div>
+    <div class="produit-desc"> Ensemble de pyjama 2 pièces pour filles "Licorne Magique & Étoiles", haut rose à manches longues avec pantalon assorti, vêtement de nuit d'hiver confortable</div>
+    <div class="produit-footer">
+      <span class="produit-price">15.55€</span>
+      <a href="produit.html?id=18">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="19" data-sexe="fille" data-saison="Hiver" data-prix="32.90">
+  <div class="produit-img-wrap">
+    <img src="assets/img-fille-hiver7.avif" alt="Pull garçon">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">fille · Hiver</span>
+    <div class="produit-name">Pull fille</div>
+    <div class="produit-desc">Nouveaux pulls d'automne et d'hiver à col rond avec motifs de dessins animés, pulls doux pour filles à porter à l'extérieur, tricot</div>
+    <div class="produit-footer">
+      <span class="produit-price">32,90 €</span>
+      <a href="produit.html?id=19">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="20" data-sexe="fille" data-saison="Hiver" data-prix="32.90">
+  <div class="produit-img-wrap">
+    <img src="assets/botte-fille6.avif" alt="Pull garçon">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">fille · Hiver</span>
+    <div class="produit-name">bottes fille</div>
+    <div class="produit-desc">Bottes longues pour filles Automne Hiver Bébé Tout-petit Princesse Académie Bottes mi-mollet Semelle souple Respirantes</div>
+    <div class="produit-footer">
+      <span class="produit-price">32,90 €</span>
+      <a href="produit.html?id=20">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="21" data-sexe="fille" data-saison="Hiver" data-prix="32.90">
+  <div class="produit-img-wrap">
+    <img src="assets/chaussette-fille1avif.avif" alt="Pull garçon">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">fille · Hiver</span>
+    <div class="produit-name">chaussettes fille</div>
+    <div class="produit-desc">Chaussettes chaudes pour filles, idéales pour l'hiver, en coton doux et confortable</div>
+    <div class="produit-footer">
+      <span class="produit-price">12,90 €</span>
+      <a href="produit.html?id=21">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── ARTICLES HIVER GARÇON ─── -->
+<div class="produit-card" data-id="22" data-sexe="garçon" data-saison="Hiver" data-prix="49.90">
+  <div class="produit-img-wrap">
+    <img src="assets/img-garcon-hiver1.avif" alt="Manteau ">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">garçon · Hiver</span>
+    <div class="produit-name">Cardigan garçon</div>
+    <div class="produit-desc">cardigan à capuche et pantalon de survêtement en peluche pour garçon, pour l'extérieur </div>
+    <div class="produit-footer">
+      <span class="produit-price">22,45 €</span>
+      <a href="produit.html?id=22">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+<div class="produit-card" data-id="23" data-sexe="garçon" data-saison="Hiver" data-prix="49.90">
+  <div class="produit-img-wrap">
+    <img src="assets/bottes-garçon1.avif" alt="Manteau ">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">garçon · Hiver</span>
+    <div class="produit-name">Bottes garçon</div>
+    <div class="produit-desc">Bottes pour garçons, chaussures de sport chaudes et décontractées pour l'automne et l'hiver</div>
+    <div class="produit-footer">
+      <span class="produit-price">34,90 €</span>
+      <a href="produit.html?id=23">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="produit-card" data-id="24" data-sexe="garçon" data-saison="Hiver" data-prix="49.90">
+  <div class="produit-img-wrap">
+    <img src="assets/veste-garçon.avif" alt="Manteau ">
+  </div>
+  <div class="produit-info">
+    <span class="produit-tag">garçon · Hiver</span>
+    <div class="produit-name">Veste garçon</div>
+    <div class="produit-desc">Veste chaude et élégante pour garçons, idéale pour l'hiver</div>
+    <div class="produit-footer">
+      <span class="produit-price">34,90 €</span>
+      <a href="produit.html?id=24">Voir produit</a>
+      <button class="produit-fav-btn" onclick="toggleFav(this)">♡</button>
+    </div>
+  </div>
+</div>
+
+    </div>
+    
+  </main>
+ 
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-brand">
+      <h2>Maison de Mode</h2>
+      <p>Mode responsable et élégante pour toute la famille.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Service client</h3>
+      <a href="#">Aide et contact</a>
+      <a href="#">Livraison et retours</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h3>Suivez-nous</h3>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+      <a href="#">WhatsApp</a>
+    </div>
+    <div class="footer-col">
+      <h3>Notre boutique</h3>
+      <p>123 rue de la mode, Paris</p>
+      <p>+33 1 23 45 67 89</p>
+      <p>info@maisondemode.com</p>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Maison de Mode. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ─── CAROUSEL ─── */
+    const slides  = document.querySelectorAll('.slide');
+    const dots    = document.querySelectorAll('.dot');
+    let current   = 0;
+    let timer;
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function startAuto() { timer = setInterval(() => goTo(current + 1), 4500); }
+
+    dots.forEach((d, i) => {
+      d.addEventListener('click', () => { clearInterval(timer); goTo(i); startAuto(); });
+    });
+
+    startAuto();
+
+    /* ─── FILTRES ─── */
+    let sexeActif   = 'all';
+    let saisonActif = 'all';
+
+    function setSexe(btn) {
+      document.querySelectorAll('.sexe-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sexeActif = btn.dataset.sexe;
+      appliquerFiltres();
+    }
+
+    function setSaison(btn) {
+      document.querySelectorAll('.saison-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      saisonActif = btn.dataset.saison;
+      appliquerFiltres();
+    }
+
+    function appliquerFiltres() {
+      const cards = document.querySelectorAll('.produit-card');
+      let visible = 0;
+      cards.forEach(card => {
+        const okSexe   = sexeActif   === 'all' || card.dataset.sexe   === sexeActif;
+        const okSaison = saisonActif === 'all' || card.dataset.saison === saisonActif;
+        if (okSexe && okSaison) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('count-label').textContent =
+        visible + ' article' + (visible > 1 ? 's' : '');
+    }
+
+    /* ─── TRI ─── */
+    function trierProduits(valeur) {
+      const grid  = document.getElementById('grid');
+      const cards = [...grid.querySelectorAll('.produit-card')];
+
+      cards.sort((a, b) => {
+        const pa = parseFloat(a.dataset.prix);
+        const pb = parseFloat(b.dataset.prix);
+        if (valeur === 'prix-asc')  return pa - pb;
+        if (valeur === 'prix-desc') return pb - pa;
+        return parseInt(a.dataset.id) - parseInt(b.dataset.id);
+      });
+
+      cards.forEach(c => grid.appendChild(c));
+    }
+
+    /* ─── RECHERCHE ─── */
+    function rechercherProduit(terme) {
+      const t     = terme.toLowerCase().trim();
+      const cards = document.querySelectorAll('.produit-card');
+      let visible = 0;
+      cards.forEach(card => {
+        const nom  = card.querySelector('.produit-name').textContent.toLowerCase();
+        const desc = card.querySelector('.produit-desc').textContent.toLowerCase();
+        if (t === '' || nom.includes(t) || desc.includes(t)) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('count-label').textContent =
+        visible + ' article' + (visible > 1 ? 's' : '');
+    }
+
+    /* ─── FAVORIS ─── */
+    let favCount = 0;
+    const compteurFavoris = document.getElementById('compteur-favoris');
+
+    function toggleFav(btn) {
+      btn.classList.toggle('liked');
+      btn.textContent = btn.classList.contains('liked') ? '♥' : '♡';
+      favCount += btn.classList.contains('liked') ? 1 : -1;
+      compteurFavoris.style.display = favCount > 0 ? 'flex' : 'none';
+      compteurFavoris.textContent   = favCount;
+    }
+
+    /* ─── PANIER ─── */
+    let panierCount = 0;
+    const compteurPanier = document.getElementById('compteur-panier');
+
+    function ajouterPanier() {
+      panierCount++;
+      compteurPanier.style.display = 'flex';
+      compteurPanier.textContent   = panierCount;
+    }
+  </script>
+
+</body>
+</html>

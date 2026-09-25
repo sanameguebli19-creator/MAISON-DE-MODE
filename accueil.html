@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison de Mode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .menu-toggle {
+       display: none;
+        font-size: 1.8rem; 
+        cursor: pointer; } 
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      padding: 5rem 2rem;
+      background: var(--white);
+      min-height: calc(100vh - 120px);
+      display: flex;
+      align-items: center;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .col-text { flex: 1; max-width: 560px; }
+
+    .col-text h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .col-text .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      display: block;
+      font-weight: 600;
+    }
+
+    .col-text p {
+      font-size: 1rem;
+      color: var(--gris);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+ 
+    .btn-hero {
+      display: inline-block;
+      background-color: var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      padding: 14px 32px;
+      border-radius: 30px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-hero:hover { background-color: var(--gold-light); }
+
+    .col-img { flex: 1; display: flex; justify-content: center; }
+
+    .col-img img {
+      width: 100%;
+      max-width: 520px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(190,138,5,0.15);
+    }
+
+    /* ============================================================
+       PROMO
+    ============================================================ */
+    .reduc-promo {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-around;
+      min-height: 500px;
+      gap: 2rem;
+      padding: 4rem 2rem;
+      background-image: url(assets/back-promo2.jpg);
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+   
+    .reduc-promo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+
+    .reduc-promo > * { position: relative; z-index: 1; }
+
+    .promo { text-align: center; }
+
+    .promo h2 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold-light);
+      font-size: 2.8rem;
+      margin-bottom: 0.8rem;
+      font-style: italic;
+    }
+
+    .promo span { font-size: 1.2rem; color: #fff; }
+
+    .reduction { text-align: center; }
+
+    .reduction h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--gold-light);
+      line-height: 1.4;
+    }
+
+    .reduction p {
+      color: #fff;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-top: 1rem;
+      max-width: 380px;
+    }
+
+    /* ============================================================
+       CARDS NOUVELLE COLLECTION / TOP VENTE
+    ============================================================ */
+    .card-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 60px;
+      gap: 1.5rem;
+    }
+
+    .collection, .top-vente {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      height: 460px;
+    }
+
+    .collection img, .top-vente img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .collection:hover img, .top-vente:hover img {
+      transform: scale(1.06);
+    }
+
+    .overlay-2 {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+      color: white;
+    }
+
+    .overlay-2 h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-style: italic;
+      margin-bottom: 0.5rem;
+      text-transform: capitalize;
+    }
+
+    /* CORRECTION : <a> dans <button> invalide → <a> stylisé */
+    .overlay-2 .btn-overlay {
+      display: inline-block;
+      background-color: var(--gold);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      padding: 8px 22px;
+      border-radius: 20px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background-color 0.2s;
+    }
+
+    .overlay-2 .btn-overlay:hover { background-color: var(--gold-light); }
+
+    /* ============================================================
+       NEWSLETTER
+    ============================================================ */
+    .inscription {
+      background: linear-gradient(135deg, #fde098 0%, #f9cc59 100%);
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .inscription h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--dark);
+      font-style: italic;
+    }
+
+    .inscription p {
+      font-size: 0.95rem;
+      color: var(--dark);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .inscription-form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .inscription-form input {
+      padding: 0.75rem 1.5rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 30px;
+      font-size: 0.9rem;
+      width: 300px;
+      outline: none;
+      font-family: var(--font-body);
+      transition: border-color 0.2s;
+      background: rgba(255,255,255,0.8);
+    }
+
+    .inscription-form input:focus {
+      border-color: var(--gold);
+      background: #fff;
+    }
+
+    .inscription-form button {
+      padding: 0.75rem 2rem;
+      background: var(--dark);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .inscription-form button:hover { background: #333; }
+
+    .newsletter-confirm {
+      display: none;
+      font-size: 0.9rem;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 4rem;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-brand h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    footer .footer-brand p {
+      font-size: 0.82rem;
+      color: #888;
+      max-width: 200px;
+      line-height: 1.6;
+    }
+
+    footer .footer-col h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    footer .footer-col p,
+    footer .footer-col a {
+      font-size: 0.85rem;
+      color: #aaa;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.6rem;
+      transition: color 0.2s;
+    }
+
+    footer .footer-col a:hover { color: var(--gold-light); }
+
+    footer .footer-bottom {
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid #222;
+      padding-top: 1.5rem;
+      font-size: 0.78rem;
+      color: #555;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .menu-toggle {
+    display: block; 
+  }
+      .row { flex-direction: column; }
+      .col-img { display: none; }
+      .col-text h1 { font-size: 2.2rem; }
+      .card-2 { grid-template-columns: 1fr; padding: 20px; }
+      .collection, .top-vente { height: 300px; }
+      .reduc-promo { flex-direction: column; text-align: center; }
+      footer { flex-direction: column; gap: 2rem; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <nav class="navbar">
+     
+    <a href="accueil.html" class="logo">
+      <img src="assets/logo.png" alt="Maison de Mode"
+           onerror="this.style.display='none'">
+    </a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul class="nav-links">
+      <li><a href="femme.html">Femme</a></li>
+      <li><a href="homme.html">Homme</a></li>
+      <li><a href="enfant.html">Enfant</a></li>
+      <li><a href="promotions.html">Promotions</a></li>
+    </ul>
+    <div class="search-box">
+      <input type="text" placeholder="Rechercher un produit...">
+    </div>
+    <div class="nav-icons">
+      <a href="accueil.html" class="nav-icon-btn" title="Accueil">
+        <img src="assets/home.png" alt="Accueil" onerror="this.outerHTML='🏠'">
+      </a>
+      <div class="nav-icon-btn" title="Panier">
+        <img src="assets/panier.png" alt="Panier" onerror="this.outerHTML='🛒'">
+        <span class="badge" id="compteur-panier">0</span>
+      </div>
+      <div class="nav-icon-btn" title="Favoris">
+        <img src="assets/favoris.png" alt="Favoris" onerror="this.outerHTML='♡'">
+        <span class="badge" id="compteur-favoris">0</span>
+      </div>
+      
+      <a href="connexion.php" class="nav-icon-btn" title="Mon compte">
+        <img src="assets/user.png" alt="Connexion" onerror="this.outerHTML='👤'">
+      </a>
+    </div>
+  </nav>
+
+  <!-- ==================== MARQUEE ==================== -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Livraison offerte dès 120€</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Retours gratuits 30 jours</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Matières premium sélectionnées</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Mode responsable & durable</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Livraison offerte dès 120€</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Retours gratuits 30 jours</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Matières premium sélectionnées</span>
+      <span class="marquee-item marquee-dot">·</span>
+      <span class="marquee-item">Mode responsable & durable</span>
+      <span class="marquee-item marquee-dot">·</span>
+    </div>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="row">
+      <div class="col col-text">
+        <h1>MAISON DE MODE</h1>
+        <span class="tagline">— Portez ce que vous êtes</span>
+        <p>La mode n'est pas un luxe, c'est une expression. Chez Maison de Mode, chaque pièce est choisie pour vous accompagner du matin au soir, avec style et confort. Nouveautés chaque semaine.</p>
+        <!-- CORRECTION : <a> dans <button> est invalide HTML5 → remplacé par <a> stylisé -->
+        <a href="enfant.html" class="btn-hero">Découvrir la collection</a>
+      </div>
+      <div class="col col-img">
+        <img src="assets/img4.jpg" alt="Collection Maison de Mode"
+             onerror="this.style.display='none'">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROMO ==================== -->
+  <section class="reduc-promo">
+    <div class="promo">
+      <h2>Saison Promo</h2>
+      <span>Profitez-en !</span>
+    </div>
+    <div class="reduction">
+      <h3>30%</h3>
+      <h3>50%</h3>
+      <h3>70%</h3>
+      <p>Profitez de nos réductions exceptionnelles sur une sélection d'articles pour célébrer la saison du printemps/été 2026. Des pièces incontournables à prix doux, pour un style frais et tendance. Offre valable jusqu'au 30 juin.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CARDS ==================== -->
+  <div class="card-2">
+    <div class="collection">
+      <img src="assets/nov collec.jpg" alt="Nouvelle collection"
+           onerror="this.style.background='var(--gold-pale)'">
+      <div class="overlay-2">
+        <h2>Nouvelle collection</h2>
+        <a href="enfant.html" class="btn-overlay">Shop now</a>
+      </div>
+    </div>
+    <div class="top-vente">
+      <img src="assets/vente.jpg" alt="Top vente"
+           onerror="this.style.background='var(--gold-pale)'">
+      <div class="overlay-2">
+        <h2>Top vente</h2>
+        <a href="enfant.html" class="btn-overlay">Shop now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== NEWSLETTER ==================== -->
+  <section class="inscription">
+    <h2>Rejoignez-nous</h2>
+    <p>Inscrivez-vous à notre newsletter pour recevoir les dernières nouveautés et nos offres spéciales.</p>
+    <div class="inscription-form">
+      <input type="email" id="emailNewsletter" placeholder="Votre adresse email">
+      <button onclick="sInscrire()">S'inscrire</button>
+    </div>
+    <p class="newsletter-confirm" id="newsletterConfirm">✅ Merci ! Vous êtes bien inscrit(e).</p>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="footer-brand">
+      <h2>Maison de Mode</h2>
+      <p>Mode responsable et élégante pour toute la famille.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Service client</h3>
+      <a href="#">Aide et contact</a>
+      <a href="#">Livraison et retours</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h3>Suivez-nous</h3>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+      <a href="#">WhatsApp</a>
+    </div>
+    <div class="footer-col">
+      <h3>Notre boutique</h3>
+      <p>123 rue de la mode, Paris</p>
+      <p>+33 1 23 45 67 89</p>
+      <p>info@maisondemode.com</p>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Maison de Mode. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    function sInscrire() {
+      const email   = document.getElementById('emailNewsletter').value.trim();
+      const confirm = document.getElementById('newsletterConfirm');
+      if (!email || !email.includes('@')) {
+        alert('Veuillez entrer une adresse email valide.');
+        return;
+      }
+      confirm.style.display = 'block';
+      document.getElementById('emailNewsletter').value = '';
+    }
+  </script>
+
+</body>
+</html>
